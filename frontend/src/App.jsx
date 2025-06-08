@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiMoon, FiSun, FiDownload, FiMenu, FiX, FiHome, FiUser, FiFileText, FiClipboard, FiMail } from "react-icons/fi";
 import cvPdf from './cv.pdf';
+import depot from './depot.pdf';
 
 // Questionnaire data avec le nouveau système de scoring
 const questionnaire = [
@@ -122,7 +123,7 @@ const teamData = [
 ];
 
 const PFEPage = () => {
-  const [darkMode, setDarkMode] = useState(false);
+ 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [answers, setAnswers] = useState({});
@@ -134,15 +135,20 @@ const PFEPage = () => {
     if (savedTheme === "dark") setDarkMode(true);
   }, []);
 
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [darkMode]);
+ const [darkMode, setDarkMode] = useState(false);
+
+useEffect(() => {
+  if (darkMode) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+}, [darkMode]);
+
+// Toggle function
+const toggleDarkMode = () => {
+  setDarkMode(!darkMode);
+};
 
   const handleAnswer = (questionId, score) => {
     setAnswers(prev => ({ ...prev, [questionId]: score }));
@@ -287,12 +293,12 @@ const PFEPage = () => {
               </h1>
               
               <motion.p 
-                className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto"
+                className="text-lg sm:text-xl text-gray-600 dark:text-black-300 mb-8 max-w-3xl mx-auto"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
-                Une étude complète sur l'observance des traitements médicamenteux sous l'angle infirmier, axée sur l'identification des difficultés et l'amélioration de l'adhésion thérapeutique.
+                Une étude complète sur l'observance thérapeutique chez les patients suivis pour des troubles bipolaires sous l'angle infirmier, axée sur l'identification des difficultés et l'amélioration de l'adhésion thérapeutique.
               </motion.p>
               
               <motion.div
@@ -324,7 +330,7 @@ const PFEPage = () => {
         </section>
 
         {/* Project Summary Section - Inchangé */}
-        <section id="project" className="py-20 px-4 sm:px-6 lg:px-8">
+        <section id="project" className="pt-20 px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0 }}
@@ -344,17 +350,26 @@ const PFEPage = () => {
                   viewport={{ once: true }}
                 >
                   <h3 className="text-2xl font-bold mb-6">Aperçu du projet</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                    Notre projet de fin d'études en soins infirmiers se concentre sur l'amélioration de l'observance thérapeutique dans les traitements au long cours. Nous avons développé des protocoles basés sur des preuves pour aider les infirmiers à identifier les difficultés d'observance et à mettre en œuvre des interventions appropriées.
+                  <p className="text-black dark:text-gray-300 mb-6 leading-relaxed">
+                    Notre projet de fin d'études en soins infirmiers se concentre sur l'amélioration de l'observance thérapeutique dans les traitements au long cours. Nous avons développé des protocoles basés sur des preuves pour aider les infirmiers à identifier les difficultés d'observance thérapeutique.
                   </p>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-                    Le projet combine une revue de littérature, des études de cas et des entretiens avec des professionnels de santé pour créer des outils pratiques utilisables au quotidien par les équipes soignantes.
-                  </p>
+                  
                   <div className="bg-indigo-50 dark:bg-gray-800 p-6 rounded-xl border-l-4 border-indigo-600">
                     <p className="text-indigo-800 dark:text-indigo-300 italic font-medium">
-                      "L'amélioration de l'observance thérapeutique peut significativement améliorer les résultats pour les patients et leur qualité de vie. Les infirmiers jouent un rôle crucial dans ce processus."
+                      "La bonne observance thérapeutique peut significativement améliorer les résultats pour les patients et leur qualité de vie. Les infirmiers jouent un rôle crucial dans ce processus."
                     </p>
                   </div>
+                  <br /><br /><br /><br />
+                  <motion.a
+                        href={depot}
+                        download
+                        className="inline-flex items-center px-5 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors w-full"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <FiDownload className="mr-2" />
+                        Notre PFE pdf
+                      </motion.a>
                 </motion.div>
                 
                 <motion.div
@@ -364,13 +379,16 @@ const PFEPage = () => {
                   viewport={{ once: true }}
                   className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700"
                 >
-                  <h3 className="text-2xl font-bold mb-6">Principaux résultats</h3>
+                  <h3 className="text-2xl font-bold mb-6">Méthodologie</h3>
                   <ul className="space-y-4">
                     {[
-                      "Développement d'une échelle d'évaluation de l'observance en 5 points",
-                      "Identification de 3 moments clés d'intervention infirmière",
-                      "Création de supports éducatifs pour patients",
-                      "Mise en place de protocoles de suivi ayant réduit les arrêts de traitement de 28% dans l'étude pilote"
+                      "Type de l’étude: Une recherche descriptive quantitative.",
+                      "Population cible: 51 patients bipolaires",
+                      "Milieu d’étude: les services de psychiatrie A et D de l’hôpital RAZI-LA MANOUBA de Tunis.",
+                      "Durée de l’étude:Durant les 3 premiers mois de 2025.",
+                      "Outil d’investigation: 1ère partie: auto-rédigée contenant les données socio-démographiques et cliniques, 2ème partie: l’échelle (MARS)",
+                      "Technique d’échantillonnage: échantillonnage accidentel par convenance",
+                      "Saisie des données: SPSS V 23 "
                     ].map((item, index) => (
                       <motion.li 
                         key={index}
@@ -386,47 +404,25 @@ const PFEPage = () => {
                           </svg>
                         </span>
                         <span className="text-gray-600 dark:text-gray-300">{item}</span>
+                        <br /><br />
+                        
                       </motion.li>
                     ))}
                   </ul>
+                  
                 </motion.div>
+                
+                    
               </div>
               
-              <motion.div
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-gray-700">
-                  {[
-                    {
-                      title: "Phase de recherche",
-                      content: "6 mois de revue de littérature et collecte de données dans 3 centres cliniques"
-                    },
-                    {
-                      title: "Méthodologie",
-                      content: "Approche mixte combinant analyse quantitative de 120 dossiers patients et entretiens qualitatifs"
-                    },
-                    {
-                      title: "Résultats",
-                      content: "Protocole infirmier maintenant implémenté dans 2 hôpitaux avec des retours positifs"
-                    }
-                  ].map((item, index) => (
-                    <div key={index} className="p-8">
-                      <h4 className="font-bold text-lg mb-3 text-indigo-600 dark:text-indigo-400">{item.title}</h4>
-                      <p className="text-gray-600 dark:text-gray-300">{item.content}</p>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+        
             </motion.div>
+            
           </div>
         </section>
 
         {/* Team Section - Inchangé */}
-        <section id="team" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-900">
+        <section id="team" className="pt-20 px-4 sm:px-6 lg:px-8 bg-gray-100 dark:bg-gray-900">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0 }}
@@ -466,8 +462,6 @@ const PFEPage = () => {
                           <p className="text-gray-700 dark:text-gray-300">{member.education}</p>
                         </div>
                         <div>
-                          <h4 className="font-medium text-gray-500 dark:text-gray-400 mb-1">Expérience</h4>
-                          <p className="text-gray-700 dark:text-gray-300">{member.experience}</p>
                         </div>
                       </div>
                       
@@ -696,7 +690,9 @@ const PFEPage = () => {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <form className="space-y-6">
+                <form className="space-y-6" action="mailto:your-email@example.com" 
+        method="GET" 
+        encType="text/plain">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -765,8 +761,8 @@ const PFEPage = () => {
       {/* Footer - Inchangé */}
       <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-8 md:space-y-0 md:space-x-12">
+            <div className="w-60">
               <h3 className="text-lg font-bold mb-4">ObservanceMédic</h3>
               <p className="text-gray-600 dark:text-gray-400">
                 Un projet de recherche infirmière axé sur l'amélioration de l'observance thérapeutique et des résultats pour les patients.
@@ -797,38 +793,15 @@ const PFEPage = () => {
               </ul>
             </div>
             
-            <div>
-              <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
-                Ressources
-              </h4>
-              <ul className="space-y-2">
-                {[
-                  { name: "Article de recherche", href: "#" },
-                  { name: "Protocole infirmier", href: "#" },
-                  { name: "Guide patient", href: "#" },
-                  { name: "Matériel éducatif", href: "#" }
-                ].map((item) => (
-                  <li key={item.name}>
-                    <motion.a
-                      href={item.href}
-                      className="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                      whileHover={{ x: 5 }}
-                    >
-                      {item.name}
-                    </motion.a>
-                  </li>
-                ))}
-              </ul>
-            </div>
             
             <div>
               <h4 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
                 Contact
               </h4>
               <ul className="space-y-2">
-                <li className="text-gray-600 dark:text-gray-400">contact@observancemedic.com</li>
-                <li className="text-gray-600 dark:text-gray-400">+33 1 23 45 67 89</li>
-                <li className="text-gray-600 dark:text-gray-400">Paris, France</li>
+                <li className="text-gray-600 dark:text-gray-400">benjalelrayen7@gmail.com</li>
+                <li className="text-gray-600 dark:text-gray-400">90199302</li>
+                <li className="text-gray-600 dark:text-gray-400">Mjez el Bab, Beja</li>
               </ul>
             </div>
           </div>

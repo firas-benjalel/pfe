@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Light theme colors */
+  --color-bg-base: #ffffff;
+  --color-bg-surface: #f9fafb;
+  --color-bg-muted: #f3f4f6;
+  --color-text-base: #111827;
+  --color-text-muted: #4b5563;
+  --color-text-inverted: #ffffff;
+}
+
+.dark {
+  /* Dark theme colors */
+  --color-bg-base: #111827;
+  --color-bg-surface: #1f2937;
+  --color-bg-muted: #374151;
+  --color-text-base: #f3f4f6;
+  --color-text-muted: #9ca3af;
+  --color-text-inverted: #111827;
+}
